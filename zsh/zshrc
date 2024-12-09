@@ -1,0 +1,67 @@
+export XDG_CONFIG_HOME="$HOME/.config"
+
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
+source <(fzf --zsh)
+
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+fi
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# history setup
+HISTFILE=$HOME/.zhistory
+SAVEHIST=1000
+HISTSIZE=999
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
+setopt auto_cd # cd by typing directory name if it's not a command
+setopt auto_list # automatically list choices on ambiguous completion
+setopt auto_menu # automatically use menu completion
+setopt always_to_end # move cursor to end if word had one match
+
+
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+
+alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias ll="eza --long -a"
+alias cat="bat --theme='Catppuccin Mocha'"
+
+# git alias
+alias ga='git add'
+alias gaa='git add --all'
+alias gb='git branch'
+alias gcm='git checkout main'
+alias gco='git checkout'
+alias gc='git commit -v'
+alias gcb='git checkout -b'
+alias gd='git diff'
+alias ggpull='git pull origin $(git_current_branch)'
+alias ggpush='git push origin $(git_current_branch)'
+alias glog='git log --oneline --decorate --graph'
+alias gst='git status'
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+# lagy git alias
+# when used lg, if you switch repository inside lazy git and quit, the outside terminal will cd into that directory
+lg()
+{
+    export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
+
+    lazygit "$@"
+
+    if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
+            cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
+            rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
+    fi
+}
