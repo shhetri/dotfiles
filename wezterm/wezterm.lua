@@ -11,6 +11,8 @@ config.enable_tab_bar = false
 config.window_decorations = "RESIZE"
 
 config.color_scheme = 'Catppuccin Macchiato'
+config.window_background_opacity = 0.9
+
 
 -- Use ⌘⇧] to toggle 'floating' WezTerm windows
 config.keys = {
