@@ -1,13 +1,22 @@
+# theme
 theme = catppuccin-mocha
 
+# font configuration
 font-size = 18 
 font-family = MesloLGS Nerd Font Mono 
+
+# style
 background-opacity = 0.8
 mouse-hide-while-typing = true
 window-padding-y = 12
 window-padding-x = 12
-shell-integration = zsh
 window-decoration = false
 window-save-state = always 
 
+copy-on-select = true
+
+# shell integration
+shell-integration = zsh
+
+# key bindings
 keybind = global:super+ctrl+shift+alt+space=toggle_quick_terminal
