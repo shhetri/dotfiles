@@ -12,13 +12,6 @@ if type brew &>/dev/null; then
     compinit
 fi
 
-export XDG_CONFIG_HOME="$HOME/.config"
-
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh --cmd cd)"
-source <(fzf --zsh)
-
-
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
