@@ -1,9 +1,8 @@
+# set XDG_CONFIG_HOME variable thats used by many cli tools to store config
 export XDG_CONFIG_HOME="$HOME/.config"
-source $HOME/.config/zsh/zsh.functions.sh
 
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh --cmd cd)"
-source <(fzf --zsh)
+# source the helper functions
+source $XDG_CONFIG_HOME/zsh/zsh.functions.sh
 
 if type brew &>/dev/null; then
     FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
@@ -11,6 +10,12 @@ if type brew &>/dev/null; then
     autoload -Uz compinit
     compinit
 fi
+
+# init starship, zoxide and fzf. This has to come after the autoload -Uz compinit for zoxide z + tab to work properly
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
+source <(fzf --zsh)
+
 
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
