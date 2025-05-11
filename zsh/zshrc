@@ -16,23 +16,33 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 source <(fzf --zsh)
 
-
+source $XDG_CONFIG_HOME/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # history setup
-HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
-setopt share_history
+HISTFILE=$XDG_CONFIG_HOME/zsh/zhistory # location of the history file
+HISTFILESIZE=1000000000 # history limit of the file on disk
+HISTSIZE=1000000000 # current session's history limit
+SAVEHIST=500000 # zsh saves this many lines from the in-memory history list to the history file upon shell exit
+HISTTIMEFORMAT="%d/%m/%Y %H:%M] "
+setopt inc_append_history # history file is updated immediately after a command is entered
+setopt share_history # allows multiple Zsh sessions to share the same command history
+setopt extended_history # records the time when each command was executed along with the command itself
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
+setopt hist_ignore_space
 setopt hist_verify
 setopt auto_cd # cd by typing directory name if it's not a command
 setopt auto_list # automatically list choices on ambiguous completion
 setopt auto_menu # automatically use menu completion
 setopt always_to_end # move cursor to end if word had one match
 
+# fzf-tab config
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
@@ -54,6 +64,7 @@ alias ggpull='git pull origin $(git_current_branch)'
 alias ggpush='git push origin $(git_current_branch)'
 alias glog='git log --oneline --decorate --graph'
 alias gst='git status'
+alias gbr="git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short)' | head -n 10"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
@@ -75,3 +86,19 @@ lg()
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export NVM_DIR="/Users/sumit.chhetri/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+export NVM_DIR="/Users/sumit.chhetri/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+export NVM_DIR="/Users/sumit.chhetri/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+export NVM_DIR="/Users/sumit.chhetri/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
